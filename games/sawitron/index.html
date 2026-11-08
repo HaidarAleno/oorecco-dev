@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Sawitron</title>
+        <link rel="stylesheet" href="/style.css">
+    </head>
+    <body>
+        <div id="sleepMode-screen"> </div>
+        <div id="loading-screen">
+            
+        </div>
+        <div id="app-layout">
+            <nav id="sidebar">
+                <div id="sidebar-tabs">
+                    <button class="nav-tab active" data-tab="combat">
+                        <span class="nav-icon">1.</span>
+                        <span class="nav-label">Combat</span>
+                    </button>
+
+                    <button class="nav-tab" data-tab="idk">
+                        <span class="nav-icon">2.</span>
+                        <span class="nav-label">idk</span>
+                    </button>
+
+                    <button class="nav-tab" data-tab="idk2">
+                        <span class="nav-icon">3.</span>
+                        <span class="nav-label">idk2</span>
+                    </button>
+
+                    <button class="nav-tab" data-tab="idk3">
+                        <span class="nav-icon">4.</span>
+                        <span class="nav-label">idk3</span>
+                    </button>
+
+                    <button class="nav-tab" data-tab="idk4">
+                        <span class="nav-icon">5.</span>
+                        <span class="nav-label">idk4</span>
+                    </button>
+
+                    <button class="nav-tab" data-tab="achievements">
+                        <span class="nav-icon">6.</span>
+                        <span class="nav-label">Achievements</span>
+                    </button>
+
+                    <button class="nav-tab" data-tab="settings">
+                        <span class="nav-icon">7.</span>
+                        <span class="nav-label">Settings</span>
+                    </button>
+                </div>
+            </nav>
+
+            <main id="main-content">
+                <section class="game-tab" id="combat">
+                    <div id="main-area">
+                        <div id="main-container">
+                            <h2 class="counter">
+                                Sawit: <span id="sawit-counter">0</span>
+                            </h2>
+                            
+                            <div id="setlevel-container">
+                                <button id="low-level">-</button>
+                                <button id="high-level">+</button>
+                            </div>
+
+                            <br>
+                            
+                            <div id="enemy-info">
+                                <div id="level-frame">
+                                    <label id="level-label">1</label>
+                                </div>
+
+                                <div class="progress-container">
+                                    <div id="progress-hp"></div>
+                                    <div id="progress-hp-bg"></div>
+                                    <label id="progress-hp-label">100</label>
+                                </div>
+                            </div>
+                            <br>
+
+                            <img id="main-sawit" src="../../assets/sawitron/sawit.webp">
+                        </div>
+                    </div>
+                </section>
+
+                <section class="game-tab" id="idk" hidden>
+                    <div class="tab-container">
+                        <h2>Idk what to do lol</h2>
+                        <p>Look here it is something... fhhahhhh</p>
+                    </div>
+                </section>
+
+                <section class="game-tab" id="idk2" hidden>
+                    <div class="tab-container">
+                        <h2>Idk v2</h2>
+                        <p>Look herething... fhhahhhh</p>
+                    </div>
+                </section>
+
+                <section class="game-tab" id="idk3" hidden>
+                    <div class="tab-container">
+                        <h2>Idk v3</h2>
+                        <p>Look here it is sog... fhhahhhh</p>
+                    </div>
+                </section>
+
+                <section class="game-tab" id="idk4" hidden>
+                    <div class="tab-container">
+                        <h2>Idk v4</h2>
+                        <p>... fhhahhhh</p>
+                    </div>
+                </section>
+
+                <section class="game-tab" id="achievements" hidden>
+                    <div class="tab-container">
+                        <h2>achievements</h2>
+                        <p>hahhhh</p>
+                    </div>
+                </section>
+
+                <section class="game-tab" id="settings" hidden>
+                    <div class="tab-container" id="settings-area">
+                        <label class="labels">Notation type</label>
+                        
+                        <select name="notations" onchange="Game.changeSetting('notations', this.value)" id="notations">
+                            <option value="normal">Normal</option>
+                            <option value="scientific">Scientific</option>
+                            <option value="engineering">Engineering</option>
+                        </select>
+                        
+                        <label class="labels">Sawit SFX</label>
+                        
+                        <select name="sawitSFX" onchange="Game.changeSetting('sawitSFX', this.value)" id="sawitSFX">
+                            <option value="none">None</option>
+                            <option value="akan_saya_lawan">AKAN SAYA LAWAN</option>
+                            <option value="bajingan_prabowo">BAJINGAN</option>
+                            <option value="berpikir_secara_logika">BERPIKIR SECARA LOGIKA</option>
+                            <option value="diantaraku_dan_sawit">DIANTARAKU DAN SAWIT</option>
+                            <option value="fahhhhhh">FAHHHHHH</option>
+                            <option value="get_out">GET OUT</option>
+                            <option value="hey_antek2_aseng">HEY ANTEK ANTEK ASENG</option>
+                            <option value="hey_antek2_aseng_v2">HEY ANTEK ANTEK ASENG V2</option>
+                            <option value="hidup_jokowi">HIDUP JOKOWI</option>
+                            <option value="iwak_tempe">IWAK TEMPE</option>
+                            <option value="jokowi_kaget">KAGETT</option>
+                            <option value="jokowi_saya_akan_lawan">SAYA AKAN LAWAN</option>
+                            <option value="mas_anies2_prabowo">MAS ANIES2</option>
+                            <option value="metal_pipe">METAL PIPE</option>
+                            <option value="ndasmu">NDASMU</option>
+                            <option value="prabowo_10_6">10 + 6 = 17</option>
+                            <option value="prabowo_emng_gw_pikirin">EMANG GUE PIKIRIN</option>
+                            <option value="prabowo_nyenye">NYE NYE</option>
+                            <option value="prabowo_sodara2">SODARA SODARA</option>
+                            <option value="prabowo_sorryye">SORRY YE</option>
+                            <option value="rakyatdesa_gkpakedollar">RAKYAT DI DESA GAK PAKE DOLLAR KOK</option>
+                            <option value="saking_pintar_jadi_gblk">SAKING PINTARNYA JADI GBLK</option>
+                            <option value="vine_boom">VINE BOOM</option>
+                            <option value="woo_celeng_gufron">WOOOO CELENGG</option>
+                        </select>
+                        
+                        <button id="music-toggle" onclick="Game.changeSetting('music_toggle')">Music: on</button>
+                        <button id="sfx-toggle" onclick="Game.changeSetting('sfx_toggle')">SFX: on</button>
+                    </div>
+                </section>
+            </main>
+        </div>
+        <script type="module" src="../../utils/js/utils.js"></script>
+        <script src="../../utils/js/break_infinity.js"></script>
+        <script type="module" src="/js/main.js"></script>
+    </body>
+</html>

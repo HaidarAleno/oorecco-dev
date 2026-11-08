@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Rock Incremental</title>
+        <link rel="stylesheet" href="/style.css">
+    </head>
+    <body>
+        <div id="sleepmode-screen" hidden="true"></div>
+        <div id="loading-screen">
+            <p id="loading-text">Loading</p>
+            <p id="version">vx.xx</p>
+        </div>
+        <div id="loading-save" hidden="true">
+            <p id="save-text">Loading save file..</p>
+        </div>
+        <div id="main-area">
+            <h2 style="text-align: center">🪨 <span id="rock-counter">0</span></h2>
+            <div id="upgrade-area">
+                <button id="miner1-upgrade" onclick="Game.upgradeMiner('miner1', Game.bulkCount);">5 [1, 1.0 sps]</button>
+                <button id="miner2-upgrade" onclick="Game.upgradeMiner('miner2', Game.bulkCount);">50 [0, 0.4 sps]</button>
+                <button id="miner3-upgrade" onclick="Game.upgradeMiner('miner3', Game.bulkCount);">500 [0, 0.2 sps]</button>
+                <button id="miner4-upgrade" onclick="Game.upgradeMiner('miner4', Game.bulkCount);">5000 [0, 0.1 sps]</button>
+                <button id="miner5-upgrade" onclick="Game.upgradeMiner('miner5', Game.bulkCount);">5000 [0, 0.05 sps]</button>
+            </div>
+
+            <div id="upgrade-helpers">
+                <button id="bulk-counter" onclick="Game.changeBulk();">1</button>
+                <button onclick="Game.buyAllMiners();">Buy All [B]</button>
+            </div>
+            
+        </div>
+
+        <div id="achievements-ui" hidden="true">
+            <p id="ach-name">ach name</p>
+            <p id="ach-desc">ach desc</p>
+            <p id="ach-reward">reward</p>
+        </div>
+
+        <div id="settings-area">
+            <br>
+            <br>
+            <br>
+
+            <label id="autosave-interval-label" class="labels">Autosave interval: 30s</label>
+            <br>    
+            <input type="range" id="autosave-setting" name="autosave-interval" oninput="document.getElementById('autosave-interval-label').innerHTML = `Autosave interval: ${this.value}s`" onchange="Game.changeSetting('autosave_interval', Number.parseInt(this.value, 10))" min="10" max="60" value="30" step="5">
+            <br>
+            <label id="notation-label" class="labels">Notation type</label>
+            <br>
+            <select name="notations" onchange="Game.changeSetting('notations', this.value)" id="notations">
+                <option value="normal">Normal</option>
+                <option value="scientific">Scientific</option>
+                <option value="engineering">Engineering</option>
+            </select>
+            <br>
+            <br>
+            <button id="music-toggle" onclick="Game.changeSetting('music_toggle')">Music: on</button>
+            <button id="sleepmode-toggle" onclick="Game.changeSetting('sleepmode_toggle')">Sleep mode: off</button>
+            <br>
+            <button onclick="Game.save();">Local Save</button>
+            <button onclick="Game.saveToCloud(Game.parseSaveFile());">Cloud Save</button>
+            <br>
+            <button onclick="Game.loginWithGoogle();">Login with Google</button>
+            <button onclick="Game.logoutWithGoogle();">Logout with Google</button>
+            <br>
+            <p id="status-text" hidden="true">lorem ipsum</p>
+            <p id="login-status">isLogin = false;</p>
+        </div>
+
+        <script type="module" src="../../utils/js/utils.js"></script>
+        <script src="../../utils/js/break_infinity.js"></script>
+        <script type="module" src="/js/main.js"></script>
+    </body>
+</html>

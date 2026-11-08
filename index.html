@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Oorecco</title>
+
+        <style>
+            body {
+                background-color: white;
+                color: black;
+                transition: 0.4s;
+            }
+
+            body.dark-mode {
+                background-color: #121212;
+                color: white;
+            }
+
+            a {
+                color: #0066cc;
+                text-decoration: underline;
+                transition: color 0.2s ease;
+            }
+
+            a:hover, a:focus {
+                color: #004499;
+                text-decoration: none;
+            }
+            /* The container switch box */
+            .switch {
+                position: relative;
+                display: inline-block;
+                width: 34px;
+                height: 20px;
+            }
+
+            /* Hide default HTML checkbox styling */
+            .switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+            /* The background track of the slider */
+            .slider {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #ccc; /* Light mode color */
+                transition: 0.4s;
+                border-radius: 20px;
+            }
+
+            /* The actual moving circle indicator */
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 14px;
+                width: 14px;
+                left: 3px;
+                bottom: 3px;
+                background-color: white;
+                transition: 0.4s;
+                border-radius: 50%;
+            }
+
+            /* Background behavior when checked */
+            input:checked + .slider {
+                background-color: #2196F3; /* Dark mode / Active color */
+            }
+
+            /* Moves the circle forward when checked */
+            input:checked + .slider:before {
+            transform: translateX(14px);
+            }
+
+        </style>
+    </head>
+    <body>
+        <h4 id="version" style="text-align: center">v2026.10.27</h4>
+        <h2>Welcome to my website!</h2>
+        <a href="games">My games</a>
+        <br>
+        <a href="tools">My tools</a>
+        <br>
+        <br>
+        <a href="about">About me</a>
+
+        <br>
+        <h3>Also check out my friend's website!</h3>
+        <a href="https://simple-tools-xi.vercel.app">Link</a>
+
+        <br> 
+        <br>
+        <br>
+        <h4>Theme toggle</h4>
+
+        <label class="switch">
+            <input type="checkbox" id="theme-toggle">
+            <span class="slider"></span>
+        </label>
+
+        <script>
+            const toggle = document.getElementById("theme-toggle");
+
+            toggle.addEventListener('change', () => {
+                if (toggle.checked) {
+                    document.body.classList.add('dark-mode');
+                } else {
+                    document.body.classList.remove('dark-mode');
+                }
+            })
+        </script>
+    </body>
+</html>

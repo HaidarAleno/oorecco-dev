@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Tools</title>
+    </head> 
+    <body>
+        <h1>test</h1>
+        <a href="trigonometry_visualizer.html">trigonometry_visualizer</a> 
+        <h2>Pythagoras test</h2>
+        <img src="../assets/tools/equation1.png"></img>
+        <br>
+        <input id="a-holder" placeholder="a goes here"></input>
+        <input id="b-holder" placeholder="b goes here"></input>
+        <button onclick="handleclick();">Execute</button>
+        <p id="c-text"> c = </p>
+        
+        <br>
+
+        <h2>Newton's law of Universal Gravitation test</h2>
+        <img src="../assets/tools/equation2.png"></img>
+        <br>
+        <input id="m1-holder" placeholder="m1 goes here"></input>
+        <input id="m2-holder" placeholder="m2 goes here"></input>
+        <input id="r-holder" placeholder="r goes here"></input>
+        <button onclick="anotherClick();">Execute</button>
+        <p id="f-text"> F = </p>
+
+        <br>
+
+        <h2>Ramanujan's Pi Formula</h2>
+        <img src="../assets/tools/equation3.png"></img>
+        <br>
+        <input id="k-holder" placeholder="k goes here"></input>
+        <input id="prec-holder" placeholder="precisionDigits goes here"></input>
+        <button onclick="againClick();">Execute</button>
+        <button onclick='let num = Number.parseInt(document.getElementById("k-holder").value); if (Number.isNaN(num)) { document.getElementById("k-holder").value = 0;} else { num++; document.getElementById("k-holder").value = num.toString(); againClick(); }'>k++</button>
+        <button onclick='let num2 = Number.parseInt(document.getElementById("prec-holder").value); if (Number.isNaN(num2)) { document.getElementById("prec-holder").value = 0;} else { num2++; document.getElementById("prec-holder").value = num2.toString(); againClick(); }'>precDigits++</button>
+        <p id="pi-text">π = </p>
+
+        <script src="js/main.js"></script>
+    </body>
+</html>
