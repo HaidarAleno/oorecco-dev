@@ -332,12 +332,9 @@ class Game {
                 saveData += i != this.achievementsRegistry.length - 1 ? "" : "|" 
             }
 
-            console.log(saveData);
-
             for (let i = 0; i < settingsDataList.length; i++) {
                 switch (i) {
                     case 0:
-                        console.log("runs?")
                         if (this.player.settings.notation === "Normal") {
                             saveData += "1";
                         } else if (this.player.settings.notation === "Scientific") {
@@ -361,7 +358,6 @@ class Game {
                 }
 
                 saveData += i != settingsDataList.length - 1 ? "," : "|";
-                console.log(saveData);
             }
 
             return saveData;
@@ -372,7 +368,7 @@ class Game {
     }
 
     async init() {
-        this.accessToken = getCookie('google_access_token');
+        this.accessToken = utils.getCookie('google_access_token');
         if (this.accessToken) {
             loginStatusText.innerHTML = "isLogin = true;";
         }
@@ -647,10 +643,12 @@ class Game {
   
                 if (!bgMusic.paused || !this.player.settings.musicEnabled) {
                     bgMusic.play();
-                    musicToggleText.innerHTML = "Music: on";
-                } else {
+                    console.log("0");
                     musicToggleText.innerHTML = "Music: off";
+                } else {
+                    musicToggleText.innerHTML = "Music: on";
                     bgMusic.pause();
+                    console.log("1");
                 }
 
                 this.player.settings.musicEnabled = !this.player.settings.musicEnabled;
@@ -677,7 +675,7 @@ class Game {
                         break;
                 }
             case "sleepmode_toggle":
-                if (!this.player.settings.sleepMode && !isTimerExist("sleepMode")) {
+                if (!this.player.settings.sleepMode && !timerManager.FindTimer("sleepMode")) {
                     timerManager.createTimer("sleepMode", 30, this.sleepMode.bind(game));
                     sleepModeBtn.innerHTML = "Sleep mode: on";
                 } else {
@@ -854,6 +852,14 @@ function getGameTime() {
     return Math.floor(secureTimeOrigin / 1000 + (performance.now() / 1000));
 }
 
+function unlockMusic() {
+    if (!isLoaded) { return; }
+    
+    inputLock = false;
+    if (game.player.settings.musicEnabled) bgMusic.play().catch(() => {});
+    ['pointerdown', 'keydown', 'touchstart'].forEach(e => window.removeEventListener(e, unlockMusic));
+}
+
 heartbeatWorker.onmessage = function(event) {
     if (event.data === 'TICK') {
         game.loop(event.timeStamp);
@@ -863,8 +869,8 @@ heartbeatWorker.onmessage = function(event) {
 sleepModeScreen.addEventListener("click", function(event) {
     isSleeping = false;
     sleepModeScreen.hidden = true;
-    if (isTimerExist("sleepMode")) {
-        changeTimerInterval('sleepMode', 15, true);
+    if (timerManager.FindTimer("sleepMode")) {
+        timerManager.setTimerInterval('sleepMode', 15);
     }
 })
 

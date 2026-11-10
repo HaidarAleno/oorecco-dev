@@ -7,7 +7,7 @@ export class TimerManager {
 
     FindTimer(id) {
         if (typeof(id) != 'string') {
-            throw new ModuleError(Code.Timer.ERR_INVALID_PARAMETERS, `Invalid ID parameter. [string, instead of ${typeof(id)}]`);
+            throw new ModuleError(Code.ERR_INVALID_PARAMETER, `Invalid ID parameter. [string, instead of ${typeof(id)}]`);
         };
 
         return this.realTimers.get(id);
@@ -15,45 +15,45 @@ export class TimerManager {
 
     createTimer(id, interval, fn, options = { removeAfterCall: false}) {
         if (typeof(id) != 'string') {
-            throw new ModuleError(Code.Timer.ERR_INVALID_PARAMETERS, `Invalid ID parameter. [string, instead of ${typeof(id)}]`);
+            throw new ModuleError(Code.ERR_INVALID_PARAMETER, `Invalid ID parameter. [string, instead of ${typeof(id)}]`);
         }
         if (typeof(interval) != 'number') {
-            throw new ModuleError(Code.Timer.ERR_INVALID_PARAMETERS, `Invalid interval parameter. [number, instead of ${typeof(interval)}]`);
+            throw new ModuleError(Code.ERR_INVALID_PARAMETER, `Invalid interval parameter. [number, instead of ${typeof(interval)}]`);
         }
         if (typeof(fn) != 'function') {
-            throw new ModuleError(Code.Timer.ERR_INVALID_PARAMETERS, `Invalid fn parameter. [function, instead of ${typeof(fn)}]`);
+            throw new ModuleError(Code.ERR_INVALID_PARAMETER, `Invalid fn parameter. [function, instead of ${typeof(fn)}]`);
         }
         
         if (this.FindTimer(id) != undefined) {
-            throw new ModuleError(Code.Timer.ERR_TIMER_ALREADY_EXIST, `Timer with ID ${ID} already exists!`);
+            throw new ModuleError(Code.ERR_TIMER_ALREADY_EXIST, `Timer with ID ${ID} already exists!`);
         }
-        this.realTimers.set(id, {id: id, interval: interval === -1 ? Infinity : interval, elapsed: 0, fn: fn, options: options});
+        this.realTimers.set(id, {id: id, interval: interval, elapsed: 0, fn: fn, options: options});
 
-        return Code.Timer.INFO_SUCCESS;
+        return Code.SUCCESS;
     }
 
     removeTimer(id) {
-        if (typeof(id) != 'string') throw new ModuleError(Code.Timer.ERR_INVALID_PARAMETERS, `Invalid ID parameter. [string, instead of ${typeof(id)}]`)
+        if (typeof(id) != 'string') throw new ModuleError(Code.ERR_INVALID_PARAMETER, `Invalid ID parameter. [string, instead of ${typeof(id)}]`)
 
         if (this.FindTimer(id) === undefined) {
-            throw new ModuleError(Code.Timer.ERR_TIMER_NOT_FOUND, `Timer with ID ${id} doesn't exist!`);
+            throw new ModuleError(Code.ERR_TIMER_NOT_FOUND, `Timer with ID ${id} doesn't exist!`);
         }
 
         this.realTimers.delete(id);
-        return Code.Timer.INFO_SUCCESS;
+        return Code.SUCCESS;
     }
 
     setTimerInterval(id, newInterval) {
-        if (typeof(id != 'string')) throw new ModuleError(Code.Timer.ERR_INVALID_PARAMETERS, `Invalid ID parameter. [string, instead of ${typeof(id)}]`);
-        if (typeof(newInterval != 'number')) throw new ModuleError(Code.Timer.ERR_INVALID_PARAMETERS, `Invalid newInterval parameter. [number, instead of ${typeof(newInterval)}]`)
+        if (typeof(id) != 'string') throw new ModuleError(Code.ERR_INVALID_PARAMETER, `Invalid ID parameter. [string, instead of ${typeof(id)}]`);
+        if (typeof(newInterval) != 'number') throw new ModuleError(Code.ERR_INVALID_PARAMETER, `Invalid newInterval parameter. [number, instead of ${typeof(newInterval)}]`)
             
         const t = this.FindTimer(id);
         if (t === undefined) {
-            throw new ModuleError(Code.Timer.ERR_TIMER_NOT_FOUND, `Timer with ID ${id} doesn't exist!`);
+            throw new ModuleError(Code.ERR_TIMER_NOT_FOUND, `Timer with ID ${id} doesn't exist!`);
         }
 
-        this.realTimers.set(id, {...t, interval: newInterval === -1 ? Infinity : interval});
-        return Code.Timer.INFO_SUCCESS;
+        this.realTimers.set(id, {...t, interval: newInterval});
+        return Code.SUCCESS;
     }
 
     updateTimer(dt) {

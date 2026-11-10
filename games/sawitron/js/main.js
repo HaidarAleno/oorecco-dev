@@ -19,6 +19,7 @@ const workerThread = new Worker("js/worker.js");
 
 let baseHP = 100;
 let activeAudioPool = [];
+const AudioCache = new Map();
 
 let clickSfxList = {
     none: {
@@ -138,7 +139,6 @@ class Game {
                 maxEnemyLevel: new Decimal(1),
                 enemyLevel: new Decimal(1),
                 HP: new Decimal(100),
-                playerDmg: new Decimal(1)
             },
 
             otherData: {
@@ -155,6 +155,12 @@ class Game {
                 gameSpeed: new Decimal(1),
                 unscaledTotalTimePlay: new Decimal(0),
                 scaledTotalTimePlay: new Decimal(0)
+            },
+
+            inventory: {
+                weapons: [
+                    { id: "wpn_starter", dmg: new Decimal(1), dmgType: 0, defPenetrate: 0}
+                ]
             },
 
             achievements: [],
@@ -220,8 +226,17 @@ class Game {
     }
 
     doClick() {
+        const equippedWeapon = game.player.inventory.weapons[0];
+        if (!equippedWeapon) {
+            return;
+        }
         if (this.player.settings.sawitSFX.toLowerCase() != "none")  playSoundEffect();
-        this.player.mainData.HP = this.player.mainData.HP.sub(this.player.mainData.playerDmg);
+
+        switch (equippedWeapon.dmgType) {
+            case 0: // Physical Damage
+                this.player.mainData.HP = this.player.mainData.HP.sub(equippedWeapon.dmg);
+        }
+        
     }
 
     async initData() {
@@ -235,11 +250,26 @@ class Game {
     }
 
     async init() {
-        await Object.values(clickSfxList).forEach(sfx => {
-            sfx.src.preload = 'auto';
-            sfx.src.volume = sfx.volume;
-            sfx.src.load();
-        });
+        await Promise.all(
+            Object.entries(clickSfxList).map(async ([key, sfxConfig]) => {
+                if (!sfxConfig.src.src || sfxConfig.src.src === window.location.href) {
+                    return;
+                }
+
+                try {
+                    const response = await fetch(sfxConfig.src.src);
+                    if (!response.ok) throw new Error(`HTTP Error! Status: ${response.status}`);
+
+                    const audioBlob = await response.blob();
+                    const blobUrl = URL.createObjectURL(audioBlob);
+
+                    AudioCache.set(key, blobUrl);
+                    console.log(`[Audio Cache]: Loaded key "${key}" -> ${blobUrl}`);
+                } catch (err) {
+                    console.error(`Failed to preload audio asset "${key}":`, err);
+                }
+            })
+        );
         await this.initData();
 
         workerThread.postMessage('START_TICK');
@@ -325,8 +355,10 @@ workerThread.onmessage = function(event) {
 
 function playSoundEffect() {
     if (!game.player.settings.sfxToggle || activeAudioPool.length > 99) return;
+    const url = AudioCache.get(game.player.settings.sawitSFX);
+    if (!url) return;
 
-    const sound = currentClickTemplate.cloneNode();
+    const sound = new Audio(url);
 
     activeAudioPool.push(sound);
 
@@ -375,4 +407,6 @@ sawitButton.addEventListener('click', function(event) {
 });
 
 window.Game = game;
+window.audioCache = AudioCache;
+window.audioPool = activeAudioPool;
 game.init();

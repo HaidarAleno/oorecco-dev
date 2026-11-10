@@ -111,14 +111,6 @@ export class Utils {
         return a.sub(a.div(b).floor().mul(b));
     }
 
-    unlockMusic() {
-        if (!isLoaded) { return; }
-        
-        inputLock = false;
-        if (game.player.settings.musicEnabled) bgMusic.play().catch(() => {});
-        ['pointerdown', 'keydown', 'touchstart'].forEach(e => window.removeEventListener(e, unlockMusic));
-    }
-
     setCookie(name, value, maxAgeSeconds) {
         document.cookie = name + '=' + encodeURIComponent(value) + 
             '; Max-Age=' + Math.max(0, Math.floor(maxAgeSeconds)) +
