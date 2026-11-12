@@ -235,6 +235,12 @@ class Game {
         switch (equippedWeapon.dmgType) {
             case 0: // Physical Damage
                 this.player.mainData.HP = this.player.mainData.HP.sub(equippedWeapon.dmg);
+            case 1: // Poison Damage
+                // test
+            case 2: // Fire Damage
+                // test
+            case 3: // Ice Damage
+                // test
         }
         
     }
