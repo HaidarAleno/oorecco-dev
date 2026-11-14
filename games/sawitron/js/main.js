@@ -129,8 +129,6 @@ let clickSfxList = {
     
 };
 
-let currentClickTemplate = clickSfxList.none.src;
-
 class Game {
     constructor() {
         this.player = {
